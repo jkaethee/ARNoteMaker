@@ -17,6 +17,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     private var camManager : CameraManager? = nil;  // Placenote CameraManager variable
     private var ptViz: FeaturePointVisualizer? = nil; // Placenote Feature
     
+    
     // Outlets
     @IBOutlet var sceneView: ARSCNView!
     
@@ -39,6 +40,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     
     func placeObject(position: SCNVector3){
         print("About to place object")
+        
+        let idleScene = SCNScene(named: "art.scnassets/ship.scn")
+        
+        let node = SCNNode()
+        
+        //for child in idleScene?.rootNode.childNodes{
+        node.addChildNode(idleScene!.rootNode)
+       // }
+        node.position = position
+        sceneView.scene.rootNode.addChildNode(node)
+        
     
     }
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
