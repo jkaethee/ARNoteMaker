@@ -9,8 +9,21 @@
 import UIKit
 import SceneKit
 import ARKit
+import PlacenoteSDK
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PNDelegate {
+    func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
+        <#code#>
+    }
+    
+    func onStatusChange(_ prevStatus: LibPlacenote.MappingStatus, _ currStatus: LibPlacenote.MappingStatus) {
+        <#code#>
+    }
+    
+    func onLocalized() {
+        <#code#>
+    }
+    
 
     @IBOutlet var sceneView: ARSCNView!
     
