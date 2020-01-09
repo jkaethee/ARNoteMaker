@@ -23,7 +23,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="startMappingAndRenderSphere:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Siv-mY-z3L"/>
+                                    <action selector="startMapping:" destination="BV1-FR-VrT" eventType="touchUpInside" id="loa-aA-4Mr"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -38,7 +38,6 @@
                     </view>
                     <connections>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
-                        <outlet property="startMappingAndRenderObject" destination="1qN-CO-lzl" id="Unu-sD-AZD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

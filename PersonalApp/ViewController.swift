@@ -14,22 +14,19 @@ import PlacenoteSDK
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PNDelegate {
     
     // Variables
-    private var camManager : CameraManager? = nil  // Placenote CameraManager variable
-    private var ptViz: FeaturePointVisualizer? = nil // Placenote Feature 
-    
+    private var camManager : CameraManager? = nil;  // Placenote CameraManager variable
+    private var ptViz: FeaturePointVisualizer? = nil; // Placenote Feature 
     
     // Outlets
-  
-    
+    @IBOutlet var sceneView: ARSCNView!
     
     // Actions
-    @IBAction func startMappingAndRenderSphere(_ sender: Any) {
+    @IBAction func startMapping(_ sender: Any) {
         
         // Start Placenote mapping
         LibPlacenote.instance.startSession()
         
-        
-        
+        print("hi")
       }
     
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
@@ -43,9 +40,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     func onLocalized() {
         
     }
-    
-
-    @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
