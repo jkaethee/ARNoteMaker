@@ -21,7 +21,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     // Outlets
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var beginButton: UIButton!
-    
+    @IBOutlet weak var saveMapButton: UIButton!
     
     // Actions
     @IBAction func startMapping(_ sender: Any) {
@@ -31,6 +31,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         
         // Hide descriptive text
         beginButton.isHidden = true
+        
+        // Save button appears
+        saveMapButton.isHidden = false
         
       }
 
@@ -83,6 +86,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
     
     override func viewDidLoad() {
+        saveMapButton.isHidden = true
         super.viewDidLoad()
         
         // Set the view's delegate

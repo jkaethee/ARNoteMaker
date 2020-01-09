@@ -37,6 +37,13 @@
                                     <action selector="startMapping:" destination="BV1-FR-VrT" eventType="touchUpInside" id="loa-aA-4Mr"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofV-4L-LH7">
+                                <rect key="frame" x="91" y="516" width="233" height="103"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="SAVE MAP"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -49,6 +56,7 @@
                     </view>
                     <connections>
                         <outlet property="beginButton" destination="1qN-CO-lzl" id="viU-Wb-r3U"/>
+                        <outlet property="saveMapButton" destination="ofV-4L-LH7" id="LIH-AO-TKf"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
