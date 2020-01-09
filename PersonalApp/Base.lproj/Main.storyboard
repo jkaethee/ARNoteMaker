@@ -18,10 +18,21 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                             </arscnView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qN-CO-lzl">
-                                <rect key="frame" x="131" y="276" width="153" height="118"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qN-CO-lzl">
+                                <rect key="frame" x="61" y="44" width="292" height="147"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <color key="tintColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Begin a new session!">
+                                            <attributes>
+                                                <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <font key="NSFont" size="26" name="Geneva"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
                                 <connections>
                                     <action selector="startMapping:" destination="BV1-FR-VrT" eventType="touchUpInside" id="loa-aA-4Mr"/>
                                 </connections>
@@ -37,6 +48,7 @@
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
                     <connections>
+                        <outlet property="beginButton" destination="1qN-CO-lzl" id="viU-Wb-r3U"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>

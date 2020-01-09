@@ -20,12 +20,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     
     // Outlets
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var beginButton: UIButton!
+    
     
     // Actions
     @IBAction func startMapping(_ sender: Any) {
         
         // Start Placenote mapping
         LibPlacenote.instance.startSession()
+        
+        // Hide descriptive text
+        beginButton.isHidden = true
         
       }
 
@@ -43,13 +48,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         print("About to place object")
         
         // Instantiates a scene that contains the 3D model
-        let idleScene = SCNScene(named: "art.scnassets/ship.scn")
+        let scene = SCNScene(named: "art.scnassets/ship.scn")!
         
         // Instantiantes an arbitrary node
         let node = SCNNode()
         
         // Adds all the child nodes from Scene#2 (the 3D model's child nodes) to the arbitrary node's childnode array
-        for child in (idleScene?.rootNode.childNodes)!{
+        for child in (scene.rootNode.childNodes){
         node.addChildNode(child)
         }
         // Sets the position of the arbitrary node to where the user tapped on Scene#1 (the original scene)
@@ -86,12 +91,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        // Create a new scene
+ /*       // Create a new scene
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
         
         // Set the scene to the view
         sceneView.scene = scene
-        
+  */
         // Add ViewController as a session delegate for ARKit
         sceneView.session.delegate = self
         
