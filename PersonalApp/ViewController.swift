@@ -12,16 +12,36 @@ import ARKit
 import PlacenoteSDK
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PNDelegate {
+    
+    // Variables
+    private var camManager : CameraManager? = nil  // Placenote CameraManager variable
+    private var ptViz: FeaturePointVisualizer? = nil // Placenote Feature 
+    
+    
+    // Outlets
+  
+    
+    
+    // Actions
+    @IBAction func startMappingAndRenderSphere(_ sender: Any) {
+        
+        // Start Placenote mapping
+        LibPlacenote.instance.startSession()
+        
+        
+        
+      }
+    
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
-        <#code#>
+        
     }
     
     func onStatusChange(_ prevStatus: LibPlacenote.MappingStatus, _ currStatus: LibPlacenote.MappingStatus) {
-        <#code#>
+        
     }
     
     func onLocalized() {
-        <#code#>
+        
     }
     
 
@@ -41,6 +61,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        // Add ViewController as a session delegate for ARKit
+        sceneView.session.delegate = self
+        
+        // Add ViewController to be the multidelegate of PlacenoteSDK
+        LibPlacenote.instance.multiDelegate += self
+        
+        // Allows PlacenoteSDK's CameraManager to manage the position of the ARKit camera
+        if let camera: SCNNode = sceneView?.pointOfView {
+            camManager = CameraManager(scene: sceneView.scene, cam: camera) // Pass in ARKit Scene and Camera Object
+        }
+        
+        // Allows PlacenoteSDK's FeaturePointVisualizer to provide a visual for point clouds created by Placenote
+        ptViz = FeaturePointVisualizer(inputScene: sceneView.scene)
+        ptViz?.enablePointcloud()
     }
     
     override func viewWillAppear(_ animated: Bool) {
