@@ -26,9 +26,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Start Placenote mapping
         LibPlacenote.instance.startSession()
         
-        print("hi")
       }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first
+            else {return}
+        let result = sceneView.hitTest(touch.location(in: sceneView), types: ARHitTestResult.ResultType.featurePoint)
+        let hitResult = result.last
+        let hitTransform = SCNMatrix4.init(hitResult!.worldTransform)
+        let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+        placeObject(position: hitVector)
+    }
+    func placeObject(position: SCNVector3){
+        
     
+    }
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
         
     }
@@ -39,6 +51,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     
     func onLocalized() {
         
+    }
+    
+    // send AR frame to placenote
+    func session(_ session: ARSession, didUpdate: ARFrame) {
+      LibPlacenote.instance.setARFrame(frame: didUpdate)
     }
     
     override func viewDidLoad() {
