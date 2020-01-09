@@ -43,6 +43,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <state key="normal" title="SAVE MAP"/>
+                                <connections>
+                                    <action selector="saveMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Gyu-q6-ZNz"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

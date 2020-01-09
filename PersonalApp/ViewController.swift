@@ -36,7 +36,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         saveMapButton.isHidden = false
         
       }
+    
+    @IBAction func saveMap(_ sender: Any) {
 
+           //save the map and stop session
+           LibPlacenote.instance.saveMap(
+           savedCb: { (mapID: String?) -> Void in
+             print ("MapId: " + mapID!)
+             LibPlacenote.instance.stopSession()
+             },
+           uploadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+              print("Map Uploading...")
+              if(completed){
+                print("Map upload done!!!")
+              }
+            })
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first
             else {return}
@@ -64,8 +80,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         node.position = position
         
         // Adds the arbitrary node to Scene#1 where the user tapped
-        sceneView.scene.rootNode.addChildNode(node)
-        
+        //sceneView.scene.rootNode.addChildNode(node)
+        var ballShape = SCNSphere(radius: 0.01)
+        var ballNode = SCNNode(geometry: ballShape)
+        ballNode.position = position
+        sceneView.scene.rootNode.addChildNode(ballNode)
     
     }
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
