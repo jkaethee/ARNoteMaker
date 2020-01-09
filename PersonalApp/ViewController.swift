@@ -34,21 +34,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
             else {return}
         let result = sceneView.hitTest(touch.location(in: sceneView), types: ARHitTestResult.ResultType.featurePoint)
         let hitResult = result.last
-        let hitPose = LibPlacenote.instance.processPose(pose: hitResult!.worldTransform)
-        placeObject(position: hitPose.position())
+        let hitTransform = SCNMatrix4.init(hitResult!.worldTransform)
+        let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+        placeObject(position: hitVector)
     }
     
     func placeObject(position: SCNVector3){
         print("About to place object")
         
+        // Instantiates a scene that contains the 3D model
         let idleScene = SCNScene(named: "art.scnassets/ship.scn")
         
+        // Instantiantes an arbitrary node
         let node = SCNNode()
         
-        //for child in idleScene?.rootNode.childNodes{
-        node.addChildNode(idleScene!.rootNode)
-       // }
+        // Adds all the child nodes from Scene#2 (the 3D model's child nodes) to the arbitrary node's childnode array
+        for child in (idleScene?.rootNode.childNodes)!{
+        node.addChildNode(child)
+        }
+        // Sets the position of the arbitrary node to where the user tapped on Scene#1 (the original scene)
         node.position = position
+        
+        // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(node)
         
     
