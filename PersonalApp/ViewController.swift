@@ -15,7 +15,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     
     // Variables
     private var camManager : CameraManager? = nil;  // Placenote CameraManager variable
-    private var ptViz: FeaturePointVisualizer? = nil; // Placenote Feature 
+    private var ptViz: FeaturePointVisualizer? = nil; // Placenote Feature
     
     // Outlets
     @IBOutlet var sceneView: ARSCNView!
@@ -33,12 +33,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
             else {return}
         let result = sceneView.hitTest(touch.location(in: sceneView), types: ARHitTestResult.ResultType.featurePoint)
         let hitResult = result.last
-        let hitTransform = SCNMatrix4.init(hitResult!.worldTransform)
-        let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
-        placeObject(position: hitVector)
+        let hitPose = LibPlacenote.instance.processPose(pose: hitResult!.worldTransform)
+        placeObject(position: hitPose.position())
     }
+    
     func placeObject(position: SCNVector3){
-        
+        print("About to place object")
     
     }
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
