@@ -57,35 +57,35 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         guard let touch = touches.first
             else {return}
         let result = sceneView.hitTest(touch.location(in: sceneView), types: ARHitTestResult.ResultType.featurePoint)
-        let hitResult = result.last
+        let hitResult = result.first
         let hitTransform = SCNMatrix4.init(hitResult!.worldTransform)
         let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
         placeObject(position: hitVector)
     }
     
     func placeObject(position: SCNVector3){
-        print("About to place object")
-        
+
         // Instantiates a scene that contains the 3D model
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        guard let modelScene = SCNScene(named: "art.scnassets/ship.scn") else {return}
         
         // Instantiantes an arbitrary node
         let node = SCNNode()
         
-        // Adds all the child nodes from Scene#2 (the 3D model's child nodes) to the arbitrary node's childnode array
-        for child in (scene.rootNode.childNodes){
-        node.addChildNode(child)
+        // Adds all the child nodes from Scene#2 (the 3D model's child nodes) to the arbitrary node's    childnode array
+        for child in (modelScene.rootNode.childNodes){
+            node.addChildNode(child)
         }
         // Sets the position of the arbitrary node to where the user tapped on Scene#1 (the original scene)
         node.position = position
         
         // Adds the arbitrary node to Scene#1 where the user tapped
-        //sceneView.scene.rootNode.addChildNode(node)
+        sceneView.scene.rootNode.addChildNode(node)
+ /*
         var ballShape = SCNSphere(radius: 0.01)
         var ballNode = SCNNode(geometry: ballShape)
         ballNode.position = position
         sceneView.scene.rootNode.addChildNode(ballNode)
-    
+*/
     }
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
         
@@ -107,19 +107,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     override func viewDidLoad() {
         saveMapButton.isHidden = true
         super.viewDidLoad()
-        
+        sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
- /*       // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+       // Create a new scene
+        let scene = SCNScene()
         
         // Set the scene to the view
         sceneView.scene = scene
-  */
+  
         // Add ViewController as a session delegate for ARKit
         sceneView.session.delegate = self
         
