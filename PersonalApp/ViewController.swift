@@ -23,6 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var beginButton: UIButton!
     @IBOutlet weak var saveMapButton: UIButton!
+    @IBOutlet weak var loadMapButton: UIButton!
     
     // Actions
     @IBAction func startMapping(_ sender: Any) {
@@ -35,6 +36,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         
         // Save button appears
         saveMapButton.isHidden = false
+        
         
       }
     
@@ -51,7 +53,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
               if(completed){
                 print("Map upload done!!!")
               }
+           
             })
+         loadMapButton.isHidden = false
     }
     
     @IBAction func loadMap(_ sender: Any) {
@@ -67,7 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         let hitResult = result.first
         let hitTransform = SCNMatrix4.init(hitResult!.worldTransform)
         let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
-        placeObject(position: hitVector)
+        placeText(position: hitVector)
     }
     
     func placeObject(position: SCNVector3){
@@ -90,17 +94,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
 
     func placeText(position: SCNVector3){
+        
         // Instantiates an arbitrary node
         let textNode = SCNNode()
         
-        let text = SCNText(string: "Exercise!", extrusionDepth: 1)
-        
+        let text = SCNText(string: "Exercise!", extrusionDepth: 0.5)
+        text.firstMaterial?.diffuse.contents = UIColor.blue
+        text.firstMaterial?.isDoubleSided = true
+        text.font = UIFont(name: "Georgia", size: 0.5)
+
+        //3. Set It's Flatness To 0 So It Looks Smooth
+        text.flatness = 0
+
         // Sets the position of the arbitrary node to where the user tapped on Scene#1 (the original scene)
-        textNode.position = position
         textNode.geometry = text
+        textNode.position = position
+        textNode.scale = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
+        textNode.orientation = sceneView.pointOfView!.orientation
 
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(textNode)
+        
+        print("Placed Text!")
     }
     
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
@@ -121,7 +136,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
     
     override func viewDidLoad() {
+        
+        // Hides the "save map" and "load map" buttons
         saveMapButton.isHidden = true
+        loadMapButton.isHidden = true
+        
+        
         super.viewDidLoad()
         sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
         // Set the view's delegate

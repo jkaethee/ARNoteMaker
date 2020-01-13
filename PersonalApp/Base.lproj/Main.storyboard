@@ -74,6 +74,7 @@
                     </view>
                     <connections>
                         <outlet property="beginButton" destination="1qN-CO-lzl" id="viU-Wb-r3U"/>
+                        <outlet property="loadMapButton" destination="odN-cv-7mP" id="pfz-AT-5BU"/>
                         <outlet property="saveMapButton" destination="ofV-4L-LH7" id="LIH-AO-TKf"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
