@@ -40,6 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         
         // Start Placenote mapping
         LibPlacenote.instance.startSession()
+        self.statusLabel.text = "Starting mapping..."
         
         // Hide descriptive text
         beginButton.isHidden = true
@@ -85,7 +86,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
            //save the map and stop session
            LibPlacenote.instance.saveMap(
            savedCb: { (mapID: String?) -> Void in
-             print ("MapId: " + mapID!)
+             self.statusLabel.text = "MapId: " + mapID!
              LibPlacenote.instance.stopSession()
             
             // save the map id user defaults
@@ -93,13 +94,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
             
              },
            uploadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
-              print("Map Uploading...")
+                self.statusLabel.text = "Map Uploading..."
               if(completed){
-                print("Map upload done!!!")
+                self.statusLabel.text = "Map upload done!!!"
               }
             })
-        
-        
         loadMapButton.isHidden = false
     }
     
@@ -150,6 +149,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         for node in sceneView.scene.rootNode.childNodes{
             node.removeFromParentNode()
         }
+        self.statusLabel.text = "Clearing map..."
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

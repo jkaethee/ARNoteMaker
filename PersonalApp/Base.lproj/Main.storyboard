@@ -21,15 +21,16 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PLACE TEXT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tar-vg-vB1">
                                 <rect key="frame" x="20" y="904" width="272" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofV-4L-LH7">
-                                <rect key="frame" x="544" y="767.5" width="184" height="90"/>
+                                <rect key="frame" x="546" y="767.5" width="184" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="SAVE MAP" backgroundImage="circle.fill" catalog="system">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -40,13 +41,13 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qN-CO-lzl">
                                 <rect key="frame" x="271" y="400" width="292" height="147"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" backgroundImage="rectangle.fill" catalog="system">
                                     <attributedString key="attributedTitle">
-                                        <fragment content="Begin a new session!">
+                                        <fragment content="Begin!">
                                             <attributes>
                                                 <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <font key="NSFont" size="26" name="Geneva"/>
+                                                <font key="NSFont" size="49" name="Geneva"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingMiddle" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -81,7 +82,7 @@
                                 <rect key="frame" x="546" y="866.5" width="182" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="LOAD MAP" backgroundImage="circle.fill" catalog="system">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -89,18 +90,11 @@
                                     <action selector="loadMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="NGP-eo-gh8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUg-2V-117">
-                                <rect key="frame" x="78" y="69" width="645" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S3-hH-7jz">
                                 <rect key="frame" x="546" y="965.5" width="182" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="CLEAR MAP" backgroundImage="circle.fill" catalog="system">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -108,6 +102,17 @@
                                     <action selector="clearMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Lcz-qw-opE"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUg-2V-117">
+                                <rect key="frame" x="95" y="73" width="645" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <string key="text" base64-UTF8="YES">
+CQ
+</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
