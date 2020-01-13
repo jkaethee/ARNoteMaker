@@ -16,6 +16,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     // Variables
     private var camManager : CameraManager? = nil;  // Placenote CameraManager variable
     private var ptViz: FeaturePointVisualizer? = nil; // Placenote Feature
+    private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())] //initializes array of maps
     
     
     // Outlets
@@ -53,6 +54,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
             })
     }
     
+    @IBAction func loadMap(_ sender: Any) {
+      // tableView(<#T##tableView: UITableView##UITableView#>, didSelectRowAt: <#T##IndexPath#>)
+    }
+    
+    
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first
             else {return}
@@ -66,7 +73,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     func placeObject(position: SCNVector3){
 
         // Instantiates a scene that contains the 3D model
-        guard let modelScene = SCNScene(named: "art.scnassets/ship.scn") else {return}
+        guard let modelScene = SCNScene(named: "art.scnassets/ball.scn") else {return}
         
         // Instantiantes an arbitrary node
         let node = SCNNode()
@@ -80,13 +87,22 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(node)
- /*
-        var ballShape = SCNSphere(radius: 0.01)
-        var ballNode = SCNNode(geometry: ballShape)
-        ballNode.position = position
-        sceneView.scene.rootNode.addChildNode(ballNode)
-*/
     }
+
+    func placeText(position: SCNVector3){
+        // Instantiates an arbitrary node
+        let textNode = SCNNode()
+        
+        let text = SCNText(string: "Exercise!", extrusionDepth: 1)
+        
+        // Sets the position of the arbitrary node to where the user tapped on Scene#1 (the original scene)
+        textNode.position = position
+        textNode.geometry = text
+
+        // Adds the arbitrary node to Scene#1 where the user tapped
+        sceneView.scene.rootNode.addChildNode(textNode)
+    }
+    
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
         
     }
