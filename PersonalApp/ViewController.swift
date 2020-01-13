@@ -75,7 +75,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
     
     func placeObject(position: SCNVector3){
-
         // Instantiates a scene that contains the 3D model
         guard let modelScene = SCNScene(named: "art.scnassets/ball.scn") else {return}
         
@@ -94,7 +93,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
 
     func placeText(position: SCNVector3){
-        
         // Instantiates an arbitrary node
         let textNode = SCNNode()
         
