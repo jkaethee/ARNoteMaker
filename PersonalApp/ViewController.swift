@@ -128,7 +128,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         }
         // Sets the position of the arbitrary node to where the user tapped on Scene#1 (the original scene)
         node.position = position
-        
+        node.orientation = sceneView.pointOfView!.orientation
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(node)
     }
