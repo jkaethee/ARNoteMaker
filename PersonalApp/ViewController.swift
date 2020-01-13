@@ -18,12 +18,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     private var ptViz: FeaturePointVisualizer? = nil; // Placenote Feature
     private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())] //initializes array of maps
     
+    private var placeObjectBool = false // bool for object toggle
+    private var placeTextBool = false // bool for text toggle
     
     // Outlets
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var beginButton: UIButton!
     @IBOutlet weak var saveMapButton: UIButton!
     @IBOutlet weak var loadMapButton: UIButton!
+    @IBOutlet weak var placeObjectLabel: UILabel!
+    @IBOutlet weak var placeObjectSwitch: UISwitch!
+    @IBOutlet weak var placeTextLabel: UILabel!
+    @IBOutlet weak var placeTextSwitch: UISwitch!
     
     // Actions
     @IBAction func startMapping(_ sender: Any) {
@@ -37,8 +43,37 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Save button appears
         saveMapButton.isHidden = false
         
+        // Placement toggles and text appear
+        placeObjectLabel.isHidden = false
+        placeObjectSwitch.isHidden = false
+        placeTextLabel.isHidden = false
+        placeTextSwitch.isHidden = false
         
       }
+    
+    @IBAction func placeObjectSwitch(_ sender: Any) {
+        // Toggle Place Object switch on
+        if placeObjectBool == false{
+            placeObjectSwitch.isOn = true
+            placeObjectBool = true
+        }
+        else{
+            placeObjectSwitch.isOn = false
+            placeObjectBool = false
+        }
+        
+    }
+    @IBAction func placeTextSwitch(_ sender: Any) {
+        // Toggle Place Text switch on
+              if placeTextBool == false{
+                  placeTextSwitch.isOn = true
+                  placeTextBool = true
+              }
+              else{
+                  placeTextSwitch.isOn = false
+                  placeTextBool = false
+              }
+    }
     
     @IBAction func saveMap(_ sender: Any) {
 
@@ -71,7 +106,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         let hitResult = result.first
         let hitTransform = SCNMatrix4.init(hitResult!.worldTransform)
         let hitVector = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
-        placeText(position: hitVector)
+        
+        if placeObjectBool == true{
+            placeObject(position: hitVector)
+            }
+        if placeTextBool == true{
+            placeText(position: hitVector)
+        }
     }
     
     func placeObject(position: SCNVector3){
@@ -139,7 +180,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         saveMapButton.isHidden = true
         loadMapButton.isHidden = true
         
-        
+        // Sets the switches to "OFF" and hides info
+        placeObjectLabel.isHidden = true
+        placeObjectSwitch.isOn = false
+        placeObjectSwitch.isHidden = true
+        placeTextLabel.isHidden = true
+        placeTextSwitch.isOn = false
+        placeTextSwitch.isHidden = true
+ 
         super.viewDidLoad()
         sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
         // Set the view's delegate

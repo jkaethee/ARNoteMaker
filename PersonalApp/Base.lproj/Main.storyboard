@@ -18,7 +18,7 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                             </arscnView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PLACE LABELS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tar-vg-vB1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PLACE TEXT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tar-vg-vB1">
                                 <rect key="frame" x="20" y="904" width="272" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
@@ -66,10 +66,16 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S8f-39-o6k">
                                 <rect key="frame" x="343" y="827" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="placeObjectSwitch:" destination="BV1-FR-VrT" eventType="valueChanged" id="Twc-n7-UAn"/>
+                                </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y2a-5Q-Tgd">
                                 <rect key="frame" x="343" y="919" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="placeTextSwitch:" destination="BV1-FR-VrT" eventType="valueChanged" id="V5N-eA-2QG"/>
+                                </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odN-cv-7mP">
                                 <rect key="frame" x="546" y="888.5" width="182" height="90"/>
@@ -97,13 +103,17 @@
                     <connections>
                         <outlet property="beginButton" destination="1qN-CO-lzl" id="viU-Wb-r3U"/>
                         <outlet property="loadMapButton" destination="odN-cv-7mP" id="pfz-AT-5BU"/>
+                        <outlet property="placeObjectLabel" destination="xG9-DR-MPh" id="Kwb-iM-zkX"/>
+                        <outlet property="placeObjectSwitch" destination="S8f-39-o6k" id="GWT-7u-ad9"/>
+                        <outlet property="placeTextLabel" destination="tar-vg-vB1" id="i9A-GO-jXG"/>
+                        <outlet property="placeTextSwitch" destination="Y2a-5Q-Tgd" id="RaW-Zr-5gn"/>
                         <outlet property="saveMapButton" destination="ofV-4L-LH7" id="LIH-AO-TKf"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.109375" y="74.670571010248892"/>
+            <point key="canvasLocation" x="-273" y="89"/>
         </scene>
     </scenes>
     <resources>
