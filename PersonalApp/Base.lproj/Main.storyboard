@@ -26,7 +26,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofV-4L-LH7">
-                                <rect key="frame" x="544" y="790.5" width="184" height="90"/>
+                                <rect key="frame" x="544" y="767.5" width="184" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -78,7 +78,7 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odN-cv-7mP">
-                                <rect key="frame" x="546" y="888.5" width="182" height="90"/>
+                                <rect key="frame" x="546" y="866.5" width="182" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -86,8 +86,26 @@
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="loadMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="FnP-VN-sob"/>
-                                    <action selector="saveMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="sVW-ID-kSR"/>
+                                    <action selector="loadMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="NGP-eo-gh8"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUg-2V-117">
+                                <rect key="frame" x="78" y="69" width="645" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S3-hH-7jz">
+                                <rect key="frame" x="546" y="965.5" width="182" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <state key="normal" title="CLEAR MAP" backgroundImage="circle.fill" catalog="system">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearMap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Lcz-qw-opE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -102,18 +120,20 @@
                     </view>
                     <connections>
                         <outlet property="beginButton" destination="1qN-CO-lzl" id="viU-Wb-r3U"/>
-                        <outlet property="loadMapButton" destination="odN-cv-7mP" id="pfz-AT-5BU"/>
+                        <outlet property="clearMapButton" destination="3S3-hH-7jz" id="Xbh-OL-lJa"/>
+                        <outlet property="loadMapButton" destination="odN-cv-7mP" id="AzV-GA-5cv"/>
                         <outlet property="placeObjectLabel" destination="xG9-DR-MPh" id="Kwb-iM-zkX"/>
                         <outlet property="placeObjectSwitch" destination="S8f-39-o6k" id="GWT-7u-ad9"/>
                         <outlet property="placeTextLabel" destination="tar-vg-vB1" id="i9A-GO-jXG"/>
                         <outlet property="placeTextSwitch" destination="Y2a-5Q-Tgd" id="RaW-Zr-5gn"/>
                         <outlet property="saveMapButton" destination="ofV-4L-LH7" id="LIH-AO-TKf"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="statusLabel" destination="yUg-2V-117" id="8hq-lx-YZQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-273" y="89"/>
+            <point key="canvasLocation" x="-273.38129496402877" y="88.489208633093526"/>
         </scene>
     </scenes>
     <resources>

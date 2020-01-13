@@ -21,6 +21,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     private var placeObjectBool = false // bool for object toggle
     private var placeTextBool = false // bool for text toggle
     
+    private var loadedMetaData: LibPlacenote.MapMetadata = LibPlacenote.MapMetadata()
+    
     // Outlets
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var beginButton: UIButton!
@@ -30,6 +32,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     @IBOutlet weak var placeObjectSwitch: UISwitch!
     @IBOutlet weak var placeTextLabel: UILabel!
     @IBOutlet weak var placeTextSwitch: UISwitch!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var clearMapButton: UIButton!
     
     // Actions
     @IBAction func startMapping(_ sender: Any) {
@@ -40,8 +44,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Hide descriptive text
         beginButton.isHidden = true
         
-        // Save button appears
+        // Save button and clear map button appear
         saveMapButton.isHidden = false
+        clearMapButton.isHidden = false
         
         // Placement toggles and text appear
         placeObjectLabel.isHidden = false
@@ -82,22 +87,70 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
            savedCb: { (mapID: String?) -> Void in
              print ("MapId: " + mapID!)
              LibPlacenote.instance.stopSession()
+            
+            // save the map id user defaults
+            UserDefaults.standard.set(mapID, forKey: "mapId")
+            
              },
            uploadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
               print("Map Uploading...")
               if(completed){
                 print("Map upload done!!!")
               }
-           
             })
-         loadMapButton.isHidden = false
+        
+        
+        loadMapButton.isHidden = false
     }
     
     @IBAction func loadMap(_ sender: Any) {
-      // tableView(<#T##tableView: UITableView##UITableView#>, didSelectRowAt: <#T##IndexPath#>)
+      // get the saved map id
+      let mapId = UserDefaults.standard.string(forKey: "mapId") ?? ""
+      
+      if (mapId == "")
+      {
+        self.statusLabel.text = "You have not saved a map yet. Nothing to load!"
+        return
+      }
+
+      statusLabel.text = "Loading your saved map with ID: " + mapId
+      
+      // when we load the map, we're going to be hiding the feature points
+      ptViz?.disablePointcloud()
+      
+      LibPlacenote.instance.loadMap(mapId: mapId,
+          downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
+            if (completed) {
+              
+              // start the Placenote session (this will start searching for localization)
+              
+              LibPlacenote.instance.getMetadata(mapId: mapId, getMetadataCb: { (success: Bool, metadata: LibPlacenote.MapMetadata) -> Void in
+                if (success)
+                {
+                  print(" Meta data was downloaded : " + metadata.name!)
+                  self.statusLabel.text = "Map and data are loaded. Point at your mapped area to relocalize"
+                  
+                  // storing meta data here so we can load it in the OnLocalized callback
+                  self.loadedMetaData = metadata
+                  LibPlacenote.instance.startSession()
+                }
+              })
+            } else if (faulted) {
+              print ("Couldnt load map: " + mapId)
+              self.statusLabel.text = "Load error Map Id: " + mapId
+            } else {
+              print ("Progress: " + percentage.description)
+              self.statusLabel.text = "Downloading map: " + percentage.description
+            }
+          }
+      )
+        }
+    
+    @IBAction func clearMap(_ sender: Any) {
+        for node in sceneView.scene.rootNode.childNodes{
+            node.removeFromParentNode()
+        }
     }
-    
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first
@@ -154,7 +207,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(textNode)
         
-        print("Placed Text!")
     }
     
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
@@ -176,9 +228,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     
     override func viewDidLoad() {
         
-        // Hides the "save map" and "load map" buttons
+        // Hides the buttons
         saveMapButton.isHidden = true
         loadMapButton.isHidden = true
+        clearMapButton.isHidden = true
         
         // Sets the switches to "OFF" and hides info
         placeObjectLabel.isHidden = true
