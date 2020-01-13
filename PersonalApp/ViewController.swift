@@ -34,6 +34,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     @IBOutlet weak var placeTextSwitch: UISwitch!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var clearMapButton: UIButton!
+    @IBOutlet weak var textField: UITextField!
     
     // Actions
     @IBAction func startMapping(_ sender: Any) {
@@ -54,7 +55,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         placeObjectSwitch.isHidden = false
         placeTextLabel.isHidden = false
         placeTextSwitch.isHidden = false
-        
+        textField.isHidden = false
       }
     
     @IBAction func placeObjectSwitch(_ sender: Any) {
@@ -190,10 +191,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Instantiates an arbitrary node
         let textNode = SCNNode()
         
-        let text = SCNText(string: "Exercise!", extrusionDepth: 0.5)
-        text.firstMaterial?.diffuse.contents = UIColor.blue
-        text.firstMaterial?.isDoubleSided = true
-        text.font = UIFont(name: "Georgia", size: 0.5)
+        let text = SCNText(string: textField.text, extrusionDepth: 0)
+        text.firstMaterial?.diffuse.contents = UIColor.yellow
+        text.firstMaterial?.isDoubleSided = false
+        text.font = UIFont(name: "DamascusBold", size: 0.5)
 
         //3. Set It's Flatness To 0 So It Looks Smooth
         text.flatness = 0
@@ -240,6 +241,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         placeTextLabel.isHidden = true
         placeTextSwitch.isOn = false
         placeTextSwitch.isHidden = true
+        textField.isHidden = true
  
         super.viewDidLoad()
         sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
