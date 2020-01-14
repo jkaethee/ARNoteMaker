@@ -19,12 +19,12 @@ public class WorkoutDayList
 {
   public static func getDay() -> String {
 
-    let animal = Animals[Int(arc4random_uniform(UInt32(Animals.count)))]
+    let day = Days[Int(arc4random_uniform(UInt32(Days.count)))]
 
-    return animal;
+    return day;
   }
 
-  static let Animals: [String] = [
+  static let Days: [String] = [
     "Monday",
     "Tuesday",
     "Wednesday",

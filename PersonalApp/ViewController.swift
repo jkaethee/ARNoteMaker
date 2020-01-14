@@ -21,6 +21,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     private var placeTextBool = false // bool for text toggle
     private var textNodeCounter = 0 // int counter for notes
     
+    private var objectManager: ObjectManager = ObjectManager() // object manager
     private var loadedMetaData: LibPlacenote.MapMetadata = LibPlacenote.MapMetadata()
     
     // Outlets
@@ -42,12 +43,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Start Placenote mapping
         LibPlacenote.instance.startSession()
         self.statusLabel.text = "Starting mapping..."
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+            self.statusLabel.text = ""
+            }
         
         // Hide descriptive text
         beginButton.isHidden = true
         
         // Save button and clear map button appear
-        saveMapButton.isHidden = false
         clearMapButton.isHidden = false
         
         // Placement toggles and text appear
@@ -87,23 +90,37 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
            //save the map and stop session
            LibPlacenote.instance.saveMap(
            savedCb: { (mapID: String?) -> Void in
+            if (mapID != nil){
              self.statusLabel.text = "MapId: " + mapID!
              LibPlacenote.instance.stopSession()
              self.ptViz?.disablePointcloud()
             
-            let mapMetaData = LibPlacenote.MapMetadataSettable()
-            mapMetaData.name = "Workout Plan for " + WorkoutDayList.getDay()
-            
-            self.statusLabel.text = "Saved Map: " + mapMetaData.name! //update UI
-            
             // save the map id user defaults
             UserDefaults.standard.set(mapID, forKey: "mapId")
             
-             },
+            let mapMetaData = LibPlacenote.MapMetadataSettable()
+            mapMetaData.name = "Workout Plan for " + WorkoutDayList.getDay()
+                     
+            self.statusLabel.text = "Saved Map: " + mapMetaData.name! //update UI
+            var userdata: [String:Any] = [:]
+            userdata["objectArray"] = self.objectManager.getModelInfoJSON()
+            mapMetaData.userdata = userdata
+                      
+            if (!LibPlacenote.instance.setMetadata(mapId: mapID!, metadata: mapMetaData, metadataSavedCb: {(success: Bool) -> Void in})) {
+                        print ("Failed to set map metadata")
+                      }
+             }
+            else {
+              NSLog("Failed to save map")
+            }
+           },
            uploadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
                 self.statusLabel.text = "Map Uploading..."
               if(completed){
                 self.statusLabel.text = "Map upload done!!!"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                         self.statusLabel.text = ""
+                         }
               }
             })
         loadMapButton.isHidden = false
@@ -111,26 +128,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     
     @IBAction func loadMap(_ sender: Any) {
       // get the saved map id
-      let mapId = UserDefaults.standard.string(forKey: "mapId") ?? ""
+      let mapID = UserDefaults.standard.string(forKey: "mapId") ?? ""
       
-      if (mapId == "")
+      if (mapID == "")
       {
         self.statusLabel.text = "You have not saved a map yet. Nothing to load!"
         return
       }
 
-      statusLabel.text = "Loading your saved map with ID: " + mapId
+      statusLabel.text = "Loading your saved map with ID: " + mapID
       
       // when we load the map, we're going to be hiding the feature points
       ptViz?.disablePointcloud()
       
-      LibPlacenote.instance.loadMap(mapId: mapId,
+      LibPlacenote.instance.loadMap(mapId: mapID,
           downloadProgressCb: {(completed: Bool, faulted: Bool, percentage: Float) -> Void in
             if (completed) {
               
               // start the Placenote session (this will start searching for localization)
-              
-              LibPlacenote.instance.getMetadata(mapId: mapId, getMetadataCb: { (success: Bool, metadata: LibPlacenote.MapMetadata) -> Void in
+              LibPlacenote.instance.getMetadata(mapId: mapID, getMetadataCb: { (success: Bool, metadata: LibPlacenote.MapMetadata) -> Void in
                 if (success)
                 {
                   print(" Meta data was downloaded : " + metadata.name!)
@@ -142,8 +158,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
                 }
               })
             } else if (faulted) {
-              print ("Couldnt load map: " + mapId)
-              self.statusLabel.text = "Load error Map Id: " + mapId
+              print ("Couldnt load map: " + mapID)
+              self.statusLabel.text = "Load error Map Id: " + mapID
             } else {
               print ("Progress: " + percentage.description)
               self.statusLabel.text = "Downloading map: " + percentage.description
@@ -153,10 +169,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         }
     
     @IBAction func clearMap(_ sender: Any) {
-        for node in sceneView.scene.rootNode.childNodes{
+       objectManager.clearModels()
+        /*for node in sceneView.scene.rootNode.childNodes{
             node.removeFromParentNode()
-        }
-        self.statusLabel.text = "Clearing map..."
+        }*/
+     self.statusLabel.text = "Clearing map..."
+          DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                   self.statusLabel.text = ""
+                   }
+        textNodeCounter = 0
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -182,7 +203,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Instantiantes an arbitrary node
         let node = SCNNode()
         
-        // Adds all the child nodes from Scene#2 (the 3D model's child nodes) to the arbitrary node's    childnode array
+        // Adds all the child nodes from Scene#2 (the 3D model's child nodes) to the arbitrary node's childnode array
         for child in (modelScene.rootNode.childNodes){
             node.addChildNode(child)
         }
@@ -191,6 +212,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         node.orientation = sceneView.pointOfView!.orientation
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(node)
+        objectManager.addModelAtPose(node: node, index: 0)
     }
 
     func placeText(position: SCNVector3){
@@ -216,11 +238,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
 
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(textNode)
-        
+        objectManager.addModelAtPose(node: textNode, index: 1)
     }
     
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {
         
+        if (LibPlacenote.instance.getMappingQuality() == LibPlacenote.MappingQuality.good) {
+            saveMapButton.isHidden = false
+        }
     }
     
     func onStatusChange(_ prevStatus: LibPlacenote.MappingStatus, _ currStatus: LibPlacenote.MappingStatus) {
@@ -228,7 +253,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
     
     func onLocalized() {
+        statusLabel.text = "Map Relocalized!"
         
+        // load the metadata objects into the scene
+        let userdata = loadedMetaData.userdata as? [String:Any]
+        
+        if (self.objectManager.loadModelArray(modelArray: userdata?["objectArray"] as? [[String: [String: String]]])) {
+          self.statusLabel.text = "Map relocalized! Look around to find your saved models."
+            
+        } else {
+          self.statusLabel.text = "Map relocalized, but there was an error loading models"
+        }
     }
     
     // send AR frame to placenote
@@ -253,7 +288,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         textField.isHidden = true
  
         super.viewDidLoad()
-        sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
+        // sceneView.debugOptions = ARSCNDebugOptions.showWorldOrigin
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -280,6 +315,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         // Allows PlacenoteSDK's FeaturePointVisualizer to provide a visual for point clouds created by Placenote
         ptViz = FeaturePointVisualizer(inputScene: sceneView.scene)
         ptViz?.enablePointcloud()
+        
+        // initialize the object manager
+        objectManager.setScene(view: sceneView)
     }
     
     override func viewWillAppear(_ animated: Bool) {

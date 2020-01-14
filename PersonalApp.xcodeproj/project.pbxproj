@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0069832C0B90D2A384409050 /* Pods_PersonalApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76647CF35661FB8407FB9B4 /* Pods_PersonalApp.framework */; };
 		70A51B5B23CE0ADB00790B4A /* WorkoutDayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A51B5A23CE0ADB00790B4A /* WorkoutDayList.swift */; };
+		70A51B5D23CE1A9D00790B4A /* ObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A51B5C23CE1A9D00790B4A /* ObjectManager.swift */; };
 		70AAA42123C76D6A001CF2BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AAA42023C76D6A001CF2BF /* AppDelegate.swift */; };
 		70AAA42323C76D6A001CF2BF /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 70AAA42223C76D6A001CF2BF /* art.scnassets */; };
 		70AAA42523C76D6A001CF2BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AAA42423C76D6A001CF2BF /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		34D25AB32A5AF66A4B7D1713 /* Pods-PersonalApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalApp.debug.xcconfig"; path = "Target Support Files/Pods-PersonalApp/Pods-PersonalApp.debug.xcconfig"; sourceTree = "<group>"; };
 		70A51B5A23CE0ADB00790B4A /* WorkoutDayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDayList.swift; sourceTree = "<group>"; };
+		70A51B5C23CE1A9D00790B4A /* ObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectManager.swift; sourceTree = "<group>"; };
 		70AAA41D23C76D6A001CF2BF /* PersonalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AAA42023C76D6A001CF2BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70AAA42223C76D6A001CF2BF /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				70AAA42B23C76D6C001CF2BF /* LaunchScreen.storyboard */,
 				70AAA42E23C76D6C001CF2BF /* Info.plist */,
 				70A51B5A23CE0ADB00790B4A /* WorkoutDayList.swift */,
+				70A51B5C23CE1A9D00790B4A /* ObjectManager.swift */,
 			);
 			path = PersonalApp;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A51B5D23CE1A9D00790B4A /* ObjectManager.swift in Sources */,
 				70A51B5B23CE0ADB00790B4A /* WorkoutDayList.swift in Sources */,
 				70AAA42523C76D6A001CF2BF /* ViewController.swift in Sources */,
 				70AAA42123C76D6A001CF2BF /* AppDelegate.swift in Sources */,
