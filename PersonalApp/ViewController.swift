@@ -170,15 +170,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     
     @IBAction func clearMap(_ sender: Any) {
        objectManager.clearModels()
-        /*for node in sceneView.scene.rootNode.childNodes{
-            node.removeFromParentNode()
-        }*/
+        
      self.statusLabel.text = "Clearing map..."
           DispatchQueue.main.asyncAfter(deadline: .now() + 5){
                    self.statusLabel.text = ""
                    }
         textNodeCounter = 0
-       // ptViz?.enablePointcloud()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

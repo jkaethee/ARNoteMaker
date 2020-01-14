@@ -65,7 +65,7 @@ class ObjectManager {
             }
         }
         else {
-            let words = textArray.removeLast()
+            let words = textArray[counter]
             let text = SCNText(string: words, extrusionDepth: 0)
             text.firstMaterial?.diffuse.contents = UIColor.yellow
             text.firstMaterial?.isDoubleSided = false
@@ -158,7 +158,11 @@ class ObjectManager {
         clearView()
         modelNodeArray.removeAll()
         modelInfoArray.removeAll()
-        
+    }
+    
+    // empties the text array()
+    func clearArray(){
+        textArray.removeAll()
     }
     
 }
