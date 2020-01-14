@@ -178,6 +178,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
                    self.statusLabel.text = ""
                    }
         textNodeCounter = 0
+       // ptViz?.enablePointcloud()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -212,7 +213,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         node.orientation = sceneView.pointOfView!.orientation
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(node)
-        objectManager.addModelAtPose(node: node, index: 0)
+        objectManager.addModelAtPose(node: node, index: -1, text: "Object")
     }
 
     func placeText(position: SCNVector3){
@@ -221,8 +222,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
         
         // Instantiates an arbitrary node
         let textNode = SCNNode()
-        
-        let text = SCNText(string: stringTextNodeCounter + ". " + textField.text!, extrusionDepth: 0)
+        let words = stringTextNodeCounter + ". " + textField.text!
+        let text = SCNText(string: words, extrusionDepth: 0)
         text.firstMaterial?.diffuse.contents = UIColor.yellow
         text.firstMaterial?.isDoubleSided = false
         text.font = UIFont(name: "DamascusBold", size: 0.5)
@@ -238,7 +239,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
 
         // Adds the arbitrary node to Scene#1 where the user tapped
         sceneView.scene.rootNode.addChildNode(textNode)
-        objectManager.addModelAtPose(node: textNode, index: 1)
+        objectManager.addModelAtPose(node: textNode, index: textNodeCounter - 1, text: words)
     }
     
     func onPose(_ outputPose: matrix_float4x4, _ arkitPose: matrix_float4x4) {

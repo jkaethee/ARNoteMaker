@@ -32,6 +32,9 @@ class ObjectManager {
     // variable that holds model path
     private var modelPath = "art.scnassets/ball.scn"
     
+    private var textArray = [String] ()
+    private var counter = 0
+    
     // constructor that sets the scene
     init() {
     }
@@ -41,11 +44,11 @@ class ObjectManager {
     }
     
     //add model to plane/mesh where reticle currently is, return the reticles global position
-    public func addModelAtPose (node: SCNNode, index: Int) {
+    public func addModelAtPose (node: SCNNode, index: Int, text: String) {
         
         // add node the storage data structures
         let newModel: ObjectInfo = ObjectInfo(modelType: index, modelPosition: node.position, modelRotation: node.rotation)
-        
+        textArray.append(text)
         // add model to model list and model node list
         modelInfoArray.append(newModel)
         modelNodeArray.append(node)
@@ -55,11 +58,26 @@ class ObjectManager {
     // turn the scn file into a node
     func getModel (index: Int) -> SCNNode {
         let node = SCNNode()
-        if (index == 0){
+        if (index == -1){
         let fileScene = SCNScene(named: modelPath)
         for child in (fileScene!.rootNode.childNodes) {
             node.addChildNode(child)
             }
+        }
+        else {
+            let words = textArray.removeLast()
+            let text = SCNText(string: words, extrusionDepth: 0)
+            text.firstMaterial?.diffuse.contents = UIColor.yellow
+            text.firstMaterial?.isDoubleSided = false
+            text.font = UIFont(name: "DamascusBold", size: 0.5)
+
+            //3. Set It's Flatness To 0 So It Looks Smooth
+            text.flatness = 0
+
+            // Sets the position of the arbitrary node to where the user tapped on Scene#1 (the original scene)
+            node.geometry = text
+            node.scale = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
+            node.orientation = sceneView.pointOfView!.orientation
         }
         print ("created model from " + String(index))
         // add node to the scene
@@ -109,12 +127,18 @@ class ObjectManager {
             
             // turn the scn file into a node
             let node = getModel(index: type)
-            
             node.position = position
             node.rotation = rotation
-
-            addModelAtPose(node: node, index: type)
             
+            if(counter == textArray.count){
+                textArray.append("temp")
+                addModelAtPose(node: node, index: type, text: textArray[counter])
+            }
+            else{
+            addModelAtPose(node: node, index: type, text: textArray[counter])
+                print(textArray[counter])
+             counter+=1
+                }
             print ("Model Manager: Retrieved " + String(describing: type) + " type at position" + String (describing: position))
         }
 
@@ -134,6 +158,7 @@ class ObjectManager {
         clearView()
         modelNodeArray.removeAll()
         modelInfoArray.removeAll()
+        
     }
     
 }
