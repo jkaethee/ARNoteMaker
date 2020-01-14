@@ -17,9 +17,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     private var camManager : CameraManager? = nil;  // Placenote CameraManager variable
     private var ptViz: FeaturePointVisualizer? = nil; // Placenote Feature
     private var maps: [(String, LibPlacenote.MapMetadata)] = [("Sample Map", LibPlacenote.MapMetadata())] //initializes array of maps
-    
     private var placeObjectBool = false // bool for object toggle
     private var placeTextBool = false // bool for text toggle
+    private var textNodeCounter = 0 // int counter for notes
     
     private var loadedMetaData: LibPlacenote.MapMetadata = LibPlacenote.MapMetadata()
     
@@ -89,6 +89,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
            savedCb: { (mapID: String?) -> Void in
              self.statusLabel.text = "MapId: " + mapID!
              LibPlacenote.instance.stopSession()
+             self.ptViz?.disablePointcloud()
+            
+            let mapMetaData = LibPlacenote.MapMetadataSettable()
+            mapMetaData.name = "Workout Plan for " + WorkoutDayList.getDay()
+            
+            self.statusLabel.text = "Saved Map: " + mapMetaData.name! //update UI
             
             // save the map id user defaults
             UserDefaults.standard.set(mapID, forKey: "mapId")
@@ -188,10 +194,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
 
     func placeText(position: SCNVector3){
+        textNodeCounter += 1
+        let stringTextNodeCounter = String(textNodeCounter)
+        
         // Instantiates an arbitrary node
         let textNode = SCNNode()
         
-        let text = SCNText(string: textField.text, extrusionDepth: 0)
+        let text = SCNText(string: stringTextNodeCounter + ". " + textField.text!, extrusionDepth: 0)
         text.firstMaterial?.diffuse.contents = UIColor.yellow
         text.firstMaterial?.isDoubleSided = false
         text.font = UIFont(name: "DamascusBold", size: 0.5)
@@ -291,7 +300,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
 
     // MARK: - ARSCNViewDelegate
-    
 /*
     // Override to create and configure nodes for anchors added to the view's session.
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
