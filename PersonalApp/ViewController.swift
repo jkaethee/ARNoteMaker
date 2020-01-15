@@ -177,7 +177,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
                    }
         textNodeCounter = 0
     }
-    
+    @IBAction func deleteMap(_ sender: Any) {
+        let mapID = UserDefaults.standard.string(forKey: "mapId") ?? ""
+        LibPlacenote.instance.deleteMap(mapId: mapID, deletedCb: {(success: Bool) -> Void in})
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first
             else {return}
