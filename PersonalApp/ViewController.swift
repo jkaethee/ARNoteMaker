@@ -179,7 +179,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, PN
     }
     @IBAction func deleteMap(_ sender: Any) {
         let mapID = UserDefaults.standard.string(forKey: "mapId") ?? ""
+        self.statusLabel.text = "Deleting Map...."
         LibPlacenote.instance.deleteMap(mapId: mapID, deletedCb: {(success: Bool) -> Void in})
+        self.statusLabel.text = "Map has been successfully deleted!"
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                 self.statusLabel.text = ""
+                 }
+
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first
