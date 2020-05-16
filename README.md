@@ -19,5 +19,5 @@ Clone this repository. You will need `Xcode`, and an `Apple device with iOS 13.2
 
 #### To Start:
 
-Select the connected device in Xcode, and click ▶️. The app should build and run automatically.
+Select the connected device in Xcode, and click ▶️. The app should build and run automatically.<br/>
 `Note: make sure your device is connected to the internet`
